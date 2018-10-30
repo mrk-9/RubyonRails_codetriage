@@ -1,0 +1,24 @@
+Hello @<%= @user.github %>,
+
+<% if @days > @max_days %>
+It's been [<%= @days %> days] since you've clicked on a codetriage.com link, let's keep those issue counts down.
+<% end %>
+Here are some issues you should check out:
+
+<% @assignments.each do |assignment| %>
+### <%= "##{assignment.issue.number}" if assignment.issue.number %> <%= link_to assignment.issue.title, issue_click_url(assignment.id, assignment.user.id ) %>
+
+<%= "[#{assignment.repo.full_name}](#{repo_url(assignment.repo)})" %>
+<%= time_ago_in_words assignment.issue.last_touched_at %> ago
+
+- - -
+
+<% end %>
+
+Go forth and make the world a better place
+
+[@schneems](http://twitter.com/schneems)
+
+[Help triage more repos at codetriage.com](<%= root_url%>)
+
+[Delete Account](<%= token_delete_user_url(@user.account_delete_token) %>)
